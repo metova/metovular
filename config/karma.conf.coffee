@@ -10,8 +10,12 @@ module.exports = (config) ->
     ].concat(['src/**', 'tests/**.tests.coffee', 'tests/**.tests.js'])
 
     port: 9876
-    reporters: ['progress']
+    reporters: ['progress', 'junit']
     colors: true
+
+    junitReporter:
+      outputFile: 'reports/jasmine.xml'
+      suite: ''
 
     autoWatch: false
     singleRun: false
