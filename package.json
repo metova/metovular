@@ -24,7 +24,9 @@
     "gulp-angular-templatecache": "~1.5.0",
     "gulp-jade": "~0.10.0",
     "merge-stream": "~0.1.6",
-    "gulp-if": "~1.2.5"
+    "gulp-if": "~1.2.5",
+    "karma-jade-preprocessor": "0.0.11",
+    "karma-ng-html2js-preprocessor": "~0.1.2"
   },
   "devDependencies": {},
   "scripts": {

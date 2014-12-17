@@ -1,4 +1,4 @@
-app = angular.module 'metovular.formFor', [ 'classy', 'ui.select', 'templates' ]
+app = angular.module 'metovular.formFor', [ 'ui.select', 'templates' ]
 
 app.directive 'maFormFor', [ ->
   {
@@ -15,64 +15,58 @@ app.directive 'maFormFor', [ ->
   }
 ]
 
-app.classy.controller
-  name: 'MAFormForCtrl'
-  inject: [
-    '$scope'
-  ]
+app.controller 'MAFormForCtrl', ($scope) ->
+  defaultParams =
+    type: 'text'
+    required: false
+    if: true
+    optionTemplate: '{{ option.label }}'
 
-  init: ->
-    @defaultParams =
-      type: 'text'
-      required: false
-      if: true
-      optionTemplate: '{{ option.label }}'
+  defaultOptions =
+    showSubmit: true
+    showCancel: false
 
-    @defaultOptions =
-      showSubmit: true
-      showCancel: false
+  $scope.getKeys = ->
+    _.keys($scope.getFields())
 
-  getKeys: ->
-    _.keys(@$.getFields())
-
-  getParam: (key, param) ->
-    if @$.getFields()[key]?[param]?
-      @_getValue(@$.getFields()[key]?[param], key)
+  $scope.getParam = (key, param) ->
+    if $scope.getFields()[key]?[param]?
+      $scope._getValue($scope.getFields()[key]?[param], key)
     else
-      @_getValue(@defaultParams[param], key)
+      $scope._getValue(defaultParams[param], key)
 
-  getOption: (key) ->
-    if @$.getOptions()?[key]?
-      @$.getOptions()?[key]
+  $scope.getOption = (key) ->
+    if $scope.getOptions()?[key]?
+      $scope.getOptions()?[key]
     else
-      @defaultOptions[key]
+      defaultOptions[key]
 
-  getFormClass: ->
-    @$.getOptions()?.formClass
+  $scope.getFormClass = ->
+    $scope.getOptions()?.formClass
 
-  getLabelClass: ->
-    @$.getOptions()?.labelClass
+  $scope.getLabelClass = ->
+    $scope.getOptions()?.labelClass
 
-  getControlClass: ->
-    @$.getOptions()?.controlClass
+  $scope.getControlClass = ->
+    $scope.getOptions()?.controlClass
 
-  _getValue: (param, key) ->
+  $scope._getValue = (param, key) ->
     if typeof param is 'function'
-      param(@$.getItem(), key)
+      param($scope.getItem(), key)
     else
       param
 
-  getSubmitValue: ->
-    "#{ if @$.getItem().id? then 'Update' else 'Create' } #{@$.getItem().type}"
+  $scope.getSubmitValue = ->
+    "#{ if $scope.getItem().id? then 'Update' else 'Create' } #{$scope.getItem().type}"
 
-  submit: ->
-    @$.onSubmit?(@$.getItem())
+  $scope.submit = ->
+    $scope.onSubmit?($scope.getItem())
 
-  cancel: ->
-    @$.onCancel?(@$.getItem())
+  $scope.cancel = ->
+    $scope.onCancel?($scope.getItem())
 
-  _getItem: ->
-    @$.getItem()
+  $scope._getItem = ->
+    $scope.getItem()
 
 app.directive 'maInput', [ ->
   restrict: 'E'

@@ -27,7 +27,7 @@ $templateCache.put("formFor/input-tpl.html","<div ng-class=\"{ \'has-error\': ge
 (function() {
   var app;
 
-  app = angular.module('metovular.formFor', ['classy', 'ui.select', 'templates']);
+  app = angular.module('metovular.formFor', ['ui.select', 'templates']);
 
   app.directive('maFormFor', [
     function() {
@@ -47,73 +47,68 @@ $templateCache.put("formFor/input-tpl.html","<div ng-class=\"{ \'has-error\': ge
     }
   ]);
 
-  app.classy.controller({
-    name: 'MAFormForCtrl',
-    inject: ['$scope'],
-    init: function() {
-      this.defaultParams = {
-        type: 'text',
-        required: false,
-        "if": true,
-        optionTemplate: '{{ option.label }}'
-      };
-      return this.defaultOptions = {
-        showSubmit: true,
-        showCancel: false
-      };
-    },
-    getKeys: function() {
-      return _.keys(this.$.getFields());
-    },
-    getParam: function(key, param) {
+  app.controller('MAFormForCtrl', function($scope) {
+    var defaultOptions, defaultParams;
+    defaultParams = {
+      type: 'text',
+      required: false,
+      "if": true,
+      optionTemplate: '{{ option.label }}'
+    };
+    defaultOptions = {
+      showSubmit: true,
+      showCancel: false
+    };
+    $scope.getKeys = function() {
+      return _.keys($scope.getFields());
+    };
+    $scope.getParam = function(key, param) {
       var _ref, _ref1;
-      if (((_ref = this.$.getFields()[key]) != null ? _ref[param] : void 0) != null) {
-        return this._getValue((_ref1 = this.$.getFields()[key]) != null ? _ref1[param] : void 0, key);
+      if (((_ref = $scope.getFields()[key]) != null ? _ref[param] : void 0) != null) {
+        return $scope._getValue((_ref1 = $scope.getFields()[key]) != null ? _ref1[param] : void 0, key);
       } else {
-        return this._getValue(this.defaultParams[param], key);
+        return $scope._getValue(defaultParams[param], key);
       }
-    },
-    getOption: function(key) {
+    };
+    $scope.getOption = function(key) {
       var _ref, _ref1;
-      if (((_ref = this.$.getOptions()) != null ? _ref[key] : void 0) != null) {
-        return (_ref1 = this.$.getOptions()) != null ? _ref1[key] : void 0;
+      if (((_ref = $scope.getOptions()) != null ? _ref[key] : void 0) != null) {
+        return (_ref1 = $scope.getOptions()) != null ? _ref1[key] : void 0;
       } else {
-        return this.defaultOptions[key];
+        return defaultOptions[key];
       }
-    },
-    getFormClass: function() {
+    };
+    $scope.getFormClass = function() {
       var _ref;
-      return (_ref = this.$.getOptions()) != null ? _ref.formClass : void 0;
-    },
-    getLabelClass: function() {
+      return (_ref = $scope.getOptions()) != null ? _ref.formClass : void 0;
+    };
+    $scope.getLabelClass = function() {
       var _ref;
-      return (_ref = this.$.getOptions()) != null ? _ref.labelClass : void 0;
-    },
-    getControlClass: function() {
+      return (_ref = $scope.getOptions()) != null ? _ref.labelClass : void 0;
+    };
+    $scope.getControlClass = function() {
       var _ref;
-      return (_ref = this.$.getOptions()) != null ? _ref.controlClass : void 0;
-    },
-    _getValue: function(param, key) {
+      return (_ref = $scope.getOptions()) != null ? _ref.controlClass : void 0;
+    };
+    $scope._getValue = function(param, key) {
       if (typeof param === 'function') {
-        return param(this.$.getItem(), key);
+        return param($scope.getItem(), key);
       } else {
         return param;
       }
-    },
-    getSubmitValue: function() {
-      return "" + (this.$.getItem().id != null ? 'Update' : 'Create') + " " + (this.$.getItem().type);
-    },
-    submit: function() {
-      var _base;
-      return typeof (_base = this.$).onSubmit === "function" ? _base.onSubmit(this.$.getItem()) : void 0;
-    },
-    cancel: function() {
-      var _base;
-      return typeof (_base = this.$).onCancel === "function" ? _base.onCancel(this.$.getItem()) : void 0;
-    },
-    _getItem: function() {
-      return this.$.getItem();
-    }
+    };
+    $scope.getSubmitValue = function() {
+      return "" + ($scope.getItem().id != null ? 'Update' : 'Create') + " " + ($scope.getItem().type);
+    };
+    $scope.submit = function() {
+      return typeof $scope.onSubmit === "function" ? $scope.onSubmit($scope.getItem()) : void 0;
+    };
+    $scope.cancel = function() {
+      return typeof $scope.onCancel === "function" ? $scope.onCancel($scope.getItem()) : void 0;
+    };
+    return $scope._getItem = function() {
+      return $scope.getItem();
+    };
   });
 
   app.directive('maInput', [
