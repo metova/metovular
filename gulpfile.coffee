@@ -14,7 +14,7 @@ config =
  */
   """
   paths: 'src/**'
-  outputDir: 'dist/'
+  outputDir: './'
 
 gulp.task 'default', ['karma-build', 'build']
 
