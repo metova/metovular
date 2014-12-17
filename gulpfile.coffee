@@ -21,11 +21,11 @@ config =
   templates: 'src/**/*.{html,jade}'
   outputDir: './'
 
-gulp.task 'default', ['build', 'karma-build']
+gulp.task 'default', ['karma-build', 'build']
 
 gulp.task 'karma-build', ['karma']
 
-gulp.task 'karma', ['build'], (done) ->
+gulp.task 'karma', (done) ->
   karmaConfig =
     singleRun: true
     autoWatch: false
