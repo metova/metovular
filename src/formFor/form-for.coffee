@@ -1,4 +1,4 @@
-app = angular.module 'metovular.formFor', [ 'classy', 'ui.select' ]
+app = angular.module 'metovular.formFor', [ 'classy', 'ui.select', 'templates' ]
 
 app.directive 'maFormFor', [ ->
   {
