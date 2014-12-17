@@ -106,9 +106,11 @@ $templateCache.put("formFor/input-tpl.html","<div ng-class=\"{ \'has-error\': ge
     $scope.cancel = function() {
       return typeof $scope.onCancel === "function" ? $scope.onCancel($scope.getItem()) : void 0;
     };
-    return $scope._getItem = function() {
+    $scope._getItem = function() {
       return $scope.getItem();
     };
+    this.getOption = $scope.getOption;
+    return this._getItem = $scope._getItem;
   });
 
   app.directive('maInput', [

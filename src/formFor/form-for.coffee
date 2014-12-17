@@ -68,6 +68,9 @@ app.controller 'MAFormForCtrl', ($scope) ->
   $scope._getItem = ->
     $scope.getItem()
 
+  @getOption = $scope.getOption
+  @_getItem = $scope._getItem
+
 app.directive 'maInput', [ ->
   restrict: 'E'
   templateUrl: 'formFor/input-tpl.html'
