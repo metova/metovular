@@ -53,7 +53,7 @@ gulp.task 'build', ->
   html = gulp.src(config.templates)
   .pipe(gulpif(/[.]jade$/, jade()))
   .on('error', notify.onError( (error) -> error.message ))
-  .pipe(templateCache())
+  .pipe(templateCache(standalone: true))
   gutil.log 'Done'
 
   merge(js, html)
