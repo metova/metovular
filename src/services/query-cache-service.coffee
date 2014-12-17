@@ -2,7 +2,7 @@ app = angular.module 'metovular.services.query-cache', []
 
 app.factory 'QueryCacheService', [ '$q', 'HttpService', ($q, HttpService) ->
   class QueryCacheService extends HttpService
-    constructor: (@url, @indexRoot) ->
+    constructor: (@url, @indexRoot, @hardDelete) ->
       super @url, @indexRoot
       @initCache()
 
@@ -12,18 +12,15 @@ app.factory 'QueryCacheService', [ '$q', 'HttpService', ($q, HttpService) ->
         byQuery: {}
         promises: {}
 
-    all: (params) ->
+    all: (params, force) ->
       params or= {}
       queryString = JSON.stringify(params)
-      if @cache.byQuery[queryString]?
-        console.log 'Returning cached items for ' + @url
+      if @cache.byQuery[queryString]? and !force
         $q.when @cache.byQuery[queryString]
-      else if @cache.promises[queryString]?
+      else if @cache.promises[queryString]? and !force
         @cache.promises[queryString]
       else
-        console.log 'Making network request for ' + @url
         @cache.promises[queryString] = super(params).then (items) =>
-          console.log 'finish promise ' + @url
           delete @cache.promises[queryString]
           @_updateItems(items)
           itemIds = items.map (i) -> i.id
@@ -34,10 +31,8 @@ app.factory 'QueryCacheService', [ '$q', 'HttpService', ($q, HttpService) ->
     find: (id) ->
       item = _.find @cache.items, { id: parseInt id }
       if item?
-        console.log 'Returning cached item'
         $q.when(item)
       else
-        console.log 'Making network request for item'
         super(id).then (data) =>
           @_updateItem data
 
@@ -51,7 +46,12 @@ app.factory 'QueryCacheService', [ '$q', 'HttpService', ($q, HttpService) ->
 
     delete: (params) ->
       super(params).then (data) =>
-        @_updateItem data # assume soft-delete
+        if @hardDelete
+          _.remove @cache.items, params
+          _.keys(@cache.byQuery).forEach (query) =>
+            _.remove @cache.byQuery[query], params
+        else
+          @_updateItem data
         data
 
     _updateItems: (items) ->

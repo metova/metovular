@@ -7,6 +7,8 @@ module.exports = (config) ->
     files: [
       'bower_components/angular/angular.js'
       'bower_components/angular-resource/angular-resource.js'
+      'bower_components/angular-mocks/angular-mocks.js'
+      'bower_components/lodash/dist/lodash.js'
     ].concat(['src/**', 'tests/**.tests.coffee', 'tests/**.tests.js'])
 
     port: 9876

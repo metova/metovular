@@ -31,10 +31,8 @@ app.factory 'CacheService', [ '$q', 'HttpService', ($q, HttpService) ->
     all: (params) ->
       params or= {}
       if @cache.lastUpdated? && moment().unix() - @cache.lastUpdated < @maxAge
-        console.log 'Returning cached items for ' + @url
         $q.when(@_filterItems(params))
       else if @_promise?
-        console.log 'Request in progress, returining child promise'
         deferred = $q.defer()
         @_deferreds.push deferred
         deferred.promise.then (items) =>
@@ -42,7 +40,6 @@ app.factory 'CacheService', [ '$q', 'HttpService', ($q, HttpService) ->
           @_filterItems(params)
         deferred.promise
       else
-        console.log 'Making network request for ' + @url
         @_promise = super().then (items) =>
           @_promise = null
           @_updateItems(items)
@@ -58,10 +55,8 @@ app.factory 'CacheService', [ '$q', 'HttpService', ($q, HttpService) ->
     find: (id) ->
       item = _.find @cache.items, { id: parseInt id }
       if item && @cache.lastUpdated? && moment().unix() - @cache.lastUpdated < @maxAge
-        console.log 'Returning cached item'
         $q.when(item)
       else
-        console.log 'Making network request for item'
         super(id).then (data) =>
           @_updateItem data
 
@@ -79,8 +74,6 @@ app.factory 'CacheService', [ '$q', 'HttpService', ($q, HttpService) ->
         data
 
     _filterItems: (params) ->
-      console.log '_filterItems'
-      console.log params
       @cache.items.filter( (item) ->
         _.keys(params).map( (key) ->
           if item[key] is params[key]

@@ -9,19 +9,24 @@ app.factory 'HttpService', [ '$resource', 'Model', ($resource, Model) ->
       new Model(data)
 
     all: (params) ->
-      @service.query(params).$promise
+      @service.query(params).$promise.then (data) =>
+        @_arrayToModel(data)
 
     find: (id) ->
-      @service.get(id: id).$promise
+      @service.get(id: id).$promise.then (data) =>
+        @_oneToModel(data)
 
     create: (params) ->
-      @service.save(params).$promise
+      @service.save(params).$promise.then (data) =>
+        @_oneToModel(data)
 
     update: (params) ->
-      @service.update(params).$promise
+      @service.update(params).$promise.then (data) =>
+        @_oneToModel(data)
 
     delete: (params) =>
-      @service.delete(params).$promise
+      @service.delete(params).$promise.then (data) =>
+        @_oneToModel(data)
 
     defaultParams: ->
       id: '@id'
@@ -30,19 +35,14 @@ app.factory 'HttpService', [ '$resource', 'Model', ($resource, Model) ->
       query:
         method: 'GET'
         isArray: true
-        transformResponse: @_arrayToModel
       get:
         method: 'GET'
-        transformResponse: @_oneToModel
       save:
         method: 'POST'
-        transformResponse: @_oneToModel
       update:
         method: 'PUT'
-        transformResponse: @_oneToModel
       delete:
         method: 'DELETE'
-        transformResponse: @_oneToModel
 
     _arrayToModel: (data) =>
       response = []

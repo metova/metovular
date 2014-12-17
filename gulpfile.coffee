@@ -34,7 +34,7 @@ gulp.task 'karma-watch', (done) ->
   karma.start
     singleRun: false
     autoWatch: true
-    configFile: __dirName + '/config/karma.conf.coffee'
+    configFile: __dirname + '/config/karma.conf.coffee'
   , -> done()
 
 gulp.task 'build', ->
