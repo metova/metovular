@@ -3,6 +3,7 @@ module.exports = (config) ->
 
     preprocessors:
       '**/*.coffee': ['coffee']
+      '**/*.jade': ['jade', 'ng-html2js']
 
     basePath: '../'
     frameworks: ['jasmine']
@@ -14,7 +15,8 @@ module.exports = (config) ->
       'bower_components/jquery/dist/jquery.js'
       'bower_components/select2/select2.js'
       'bower_components/ui-select/dist/select.js'
-    ].concat(['metovular.js', 'tests/**.tests.coffee', 'tests/**.tests.js'])
+      'src/**'
+    ].concat(['tests/**.tests.coffee', 'tests/**.tests.js'])
 
     port: 9876
     reporters: ['progress', 'junit']
@@ -23,6 +25,9 @@ module.exports = (config) ->
     junitReporter:
       outputFile: 'reports/jasmine.xml'
       suite: ''
+
+    ngHtml2JsPreprocessor:
+      moduleName: 'templates'
 
     autoWatch: false
     singleRun: false
