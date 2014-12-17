@@ -1,4 +1,4 @@
-# Metova Angular Components
+# Metova Angular Components [![Build Status](https://travis-ci.org/metova/metovular.svg?branch=master)](https://travis-ci.org/metova/metovular)
 
 This bower package provides several utilities for developing angular apps.
 
