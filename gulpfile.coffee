@@ -29,7 +29,7 @@ gulp.task 'karma', (done) ->
   karmaConfig =
     singleRun: true
     autoWatch: false
-    browsers : if argv.browsers then argv.browsers.trim().split(',') else ['Chrome']
+    browsers : if argv.browsers then argv.browsers.trim().split(',') else ['PhantomJS']
     configFile: __dirname + '/config/karma.conf.coffee'
 
   gutil.log 'Running tests with karma...'

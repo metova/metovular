@@ -31,4 +31,4 @@ module.exports = (config) ->
 
     autoWatch: false
     singleRun: false
-    browsers: ['Chrome']
+    browsers: ['PhantomJS']
