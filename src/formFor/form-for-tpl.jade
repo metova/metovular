@@ -1,0 +1,7 @@
+form(id="{{ getItem().type.toLowerCase() }}-form", class="{{ getFormClass() }}", ng-submit="submit()", ng-transclude="")
+
+div.form-group
+  button.btn.btn-primary.pull-right(ng-click="submit()", ng-if="getOption('showSubmit')") {{ getSubmitValue() }}
+  button.btn.btn-default(ng-click="cancel($event)", ng-if="getOption('showCancel')") Cancel
+
+  div.clearfix

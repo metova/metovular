@@ -6,6 +6,10 @@ gutil = require 'gulp-util'
 coffee = require 'gulp-coffee'
 concat = require 'gulp-concat'
 notify = require 'gulp-notify'
+jade = require 'gulp-jade'
+templateCache = require 'gulp-angular-templatecache'
+merge = require 'merge-stream'
+gulpif = require 'gulp-if'
 
 config =
   banner: """
@@ -13,7 +17,8 @@ config =
  * Coming soon
  */
   """
-  paths: 'src/**'
+  source: 'src/**/*.{coffee,js}'
+  templates: 'src/**/*.{html,jade}'
   outputDir: './'
 
 gulp.task 'default', ['karma-build', 'build']
@@ -39,9 +44,18 @@ gulp.task 'karma-watch', (done) ->
 
 gulp.task 'build', ->
   gutil.log 'Compiling source...'
-  gulp.src(config.paths)
-  .pipe(coffee(sourceMap: false))
+  js = gulp.src(config.source)
+  .pipe(gulpif(/[.]coffee$/, coffee(sourceMap: false)))
   .on('error', notify.onError( (error) -> error.message ))
+  gutil.log 'Done'
+
+  gutil.log 'Compiling templates...'
+  html = gulp.src(config.templates)
+  .pipe(gulpif(/[.]jade$/, jade()))
+  .on('error', notify.onError( (error) -> error.message ))
+  .pipe(templateCache())
+  gutil.log 'Done'
+
+  merge(js, html)
   .pipe(concat('metovular.js'))
   .pipe(gulp.dest(config.outputDir))
-  gutil.log 'Done'

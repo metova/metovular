@@ -1,0 +1,84 @@
+div.form-group(
+  ng-class="{ 'has-error': getItem().errors[getParam('for')] }",
+  ng-if="getParam('if')"
+)
+  label.control-label(for="{{ getParam('for') }}", class="{{ getOption('labelClass') }}") {{ getParam('label') }}
+  div(class="{{ getOption('controlClass') }}", ng-switch="getParam('type')")
+    input.form-control(
+      id="{{ getParam('for') }}",
+      type="{{ getParam('type') }}",
+      maxlength="{{ getParam('maxlength') }}",
+      ng-required="{{ !!getParam('required') }}",
+      ng-model="getItem()[getParam('for')]",
+      placeholder="{{ getParam('placeholder') }}",
+      ng-switch-default=""
+    )
+    input.form-control(
+      id="{{ getParam('for') }}",
+      type="text",
+      maxlength="10",
+      ng-required="{{ !!getParam('required') }}",
+      ng-model="getItem()[getParam('for')]",
+      placeholder="{{ getParam('placeholder') }}",
+      ng-datepicker="",
+      ng-switch-when="datepicker"
+    )
+    div.btn-group.btn-group-justified(
+      id="{{ getParam('for') }}"
+      ng-switch-when="radio-buttons"
+    )
+      label.btn.btn-default(
+        ng-model="getItem()[getParam('for')]",
+        btn-radio="button.value",
+        ng-repeat="button in getParam('_options') track by $index"
+      ) {{ button.label }}
+
+    div.btn-group(
+      id="{{ getParam('for') }}",
+      ng-switch-when="platform-check-buttons"
+    )
+      label.btn.btn-default(
+        ng-model="getItem()[getParam('for')][button.value]",
+        btn-radio="button.value",
+        btn-checkbox,
+        ng-repeat="button in getParam('_options') track by $index"
+      )
+        platform-icon(data="button.label")
+
+    div(ng-switch-when="select2")
+      ui-select.form-control(
+        id="{{ getParam('for') }}",
+        name="{{ getParam('for') }}",
+        ng-model="getItem()[getParam('for')]",
+        theme="select2",
+        ng-required="{{ !!getParam('required') }}"
+      )
+        ui-select-match(placeholder="Select from the list...") {{ $select.selected.label }}
+        ui-select-choices(repeat="option.value as option in getParam('_options') | filter:$select.search")
+          div(ng-bind-html="option.label | highlight: $select.search")
+
+    div(ng-switch-when="select2-multi")
+      ui-select.form-control(
+        id="{{ getParam('for') }}",
+        name="{{ getParam('for') }}",
+        ng-model="getItem()[getParam('for')]",
+        theme="select2",
+        ng-required="{{ !!getParam('required') }}",
+        multiple
+      )
+        ui-select-match(placeholder="Select from the list...") {{ $item.label }}
+        ui-select-choices(repeat="option.value as option in getParam('_options') | filter:$select.search")
+          div(ng-bind-html="option.label | highlight: $select.search")
+
+
+    select.form-control(
+      id="{{ getParam('for') }}",
+      name="{{ getParam('for') }}",
+      ng-model="getItem()[getParam('for')]",
+      ng-required="{{ !!getParam('required') }}",
+      ng-options="option.value as option.label for option in getParam('_options')",
+      ng-switch-when="select"
+    )
+
+    div
+      span.help-block(ng-repeat="error in getItem().errors[getParam('for')]") {{ error }}
