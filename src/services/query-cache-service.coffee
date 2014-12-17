@@ -1,4 +1,4 @@
-app = angular.module 'metovular.services.query-cache', []
+app = angular.module 'metovular.services.queryCache', []
 
 app.factory 'QueryCacheService', [ '$q', 'HttpService', ($q, HttpService) ->
   class QueryCacheService extends HttpService
@@ -73,12 +73,9 @@ app.factory 'QueryCacheService', [ '$q', 'HttpService', ($q, HttpService) ->
 
     _matchQuery: (query, item) ->
       params = JSON.parse query
-      _.keys(params).map( (key) =>
-        if "#{item[key]}" is "#{params[key]}" or @customMatchers()[key]?(item, params)
-          0
-        else
-          1
-      ).reduce(( (a,b) -> a + b ), 0) is 0
+      _.keys(params).reduce( (carry, key) =>
+        carry and ("#{item[key]}" is "#{params[key]}" or @customMatchers()[key]?(item, params))
+      , true)
 
     customMatchers: ->
       {}
