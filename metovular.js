@@ -27,7 +27,7 @@ $templateCache.put("formFor/input-tpl.html","<div ng-class=\"{ \'has-error\': ge
 (function() {
   var app;
 
-  app = angular.module('metovular.formFor', ['classy', 'ui-select']);
+  app = angular.module('metovular.formFor', ['classy', 'ui.select', 'templates']);
 
   app.directive('maFormFor', [
     function() {
