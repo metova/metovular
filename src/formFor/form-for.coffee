@@ -83,6 +83,8 @@ app.directive 'maInput', [ ->
       required: 'false'
       if: true
       maxlength: 255
+      id: ->
+        attributes.for
       label: ->
         attributes.label || attributes.for
       _options: (param, key) =>

@@ -5,7 +5,7 @@ div.form-group(
   label.control-label(for="{{ getParam('for') }}", class="{{ getOption('labelClass') }}") {{ getParam('label') }}
   div(class="{{ getOption('controlClass') }}", ng-switch="getParam('type')")
     input.form-control(
-      id="{{ getParam('for') }}",
+      id="{{ getParam('id') }}",
       type="{{ getParam('type') }}",
       maxlength="{{ getParam('maxlength') }}",
       ng-required="getParam('required') === 'true' ? 'true' : ''",
@@ -15,7 +15,7 @@ div.form-group(
       ng-disabled="getParam('disabled') === 'true' ? true : ''"
     )
     input.form-control(
-      id="{{ getParam('for') }}",
+      id="{{ getParam('id') }}",
       type="text",
       maxlength="10",
       ng-required="getParam('required') === 'true' ? 'true' : ''",
@@ -36,7 +36,7 @@ div.form-group(
       ) {{ button.label }}
 
     div.btn-group(
-      id="{{ getParam('for') }}",
+      id="{{ getParam('id') }}",
       ng-switch-when="platform-check-buttons"
     )
       label.btn.btn-default(
@@ -49,7 +49,7 @@ div.form-group(
 
     div(ng-switch-when="select2")
       ui-select.form-control(
-        id="{{ getParam('for') }}",
+        id="{{ getParam('id') }}",
         name="{{ getParam('for') }}",
         ng-model="getItem()[getParam('for')]",
         theme="select2",
@@ -62,7 +62,7 @@ div.form-group(
 
     div(ng-switch-when="select2-multi")
       ui-select.form-control(
-        id="{{ getParam('for') }}",
+        id="{{ getParam('id') }}",
         name="{{ getParam('for') }}",
         ng-model="getItem()[getParam('for')]",
         theme="select2",
@@ -76,7 +76,7 @@ div.form-group(
 
 
     select.form-control(
-      id="{{ getParam('for') }}",
+      id="{{ getParam('id') }}",
       name="{{ getParam('for') }}",
       ng-model="getItem()[getParam('for')]",
       ng-required="getParam('required') === 'true' ? 'true' : ''",
