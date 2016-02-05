@@ -388,6 +388,52 @@ $templateCache.put("formFor/input-tpl.html","<div ng-class=\"{ \'has-error\': ge
 }).call(this);
 
 (function() {
+  angular.module('metovular.services.gcm', []).factory('$gcm', function() {
+    var GCM;
+    return new (GCM = (function() {
+      function GCM() {
+        this.push = null;
+        this.registration = new Rx.Subject();
+        this.notifications = new Rx.Subject();
+      }
+
+      GCM.prototype.init = function(senderID) {
+        this.push = PushNotification.init({
+          android: {
+            senderID: senderID
+          },
+          ios: {
+            senderID: senderID
+          }
+        });
+        this.push.on('registration', (function(_this) {
+          return function(data) {
+            console.log('$gcm:registration', data);
+            return _this.registration.onNext(data);
+          };
+        })(this));
+        this.push.on('error', (function(_this) {
+          return function(data) {
+            console.log('$gcm:error', data);
+            return _this.registration.onError(data);
+          };
+        })(this));
+        return this.push.on('notification', (function(_this) {
+          return function(data) {
+            console.log('$gcm:notification', data);
+            return _this.notifications.onNext(data);
+          };
+        })(this));
+      };
+
+      return GCM;
+
+    })());
+  });
+
+}).call(this);
+
+(function() {
   var app,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 

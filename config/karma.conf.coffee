@@ -11,10 +11,11 @@ module.exports = (config) ->
       'bower_components/angular/angular.js'
       'bower_components/angular-mocks/angular-mocks.js'
       'bower_components/angular-resource/angular-resource.js'
-      'bower_components/lodash/dist/lodash.js'
-      'bower_components/jquery/dist/jquery.js'
+      'bower_components/lodash/lodash.js'
+      'bower_components/jquery/jquery.js'
       'bower_components/select2/select2.js'
       'bower_components/ui-select/dist/select.js'
+      'bower_components/rxjs/dist/rx.js'
       'src/**'
     ].concat(['tests/**.tests.coffee', 'tests/**.tests.js'])
 
