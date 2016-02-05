@@ -77,3 +77,25 @@ angular.module('my-module', ['metovular'])
   TaskService.delete(someTask);
 })
 ```
+
+### GCM
+
+This is a wrapper around the cordova PushPlugin (`phonegap-plugin-push`) that uses RxJS to send notifications.
+
+```javascript
+angular.module('my-module', ['metovular'])
+
+.run(function($gcm, $ionicPlatform) {
+  $gcm.registration.subscribe(function(data) {
+    console.log('push:registration', data.registrationId);
+  });
+
+  $gcm.notifications.subscribe(function(data) {
+    console.log('push:notification', data);
+  });
+
+  $ionicPlatform.ready(function() {
+    $gcm.init('MySenderId');
+  });
+});
+```

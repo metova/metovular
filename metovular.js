@@ -715,6 +715,6 @@ $templateCache.put("formFor/input-tpl.html","<div ng-class=\"{ \'has-error\': ge
 (function() {
   var app;
 
-  app = angular.module('metovular.services', ['metovular.services.cache', 'metovular.services.http', 'metovular.services.queryCache']);
+  app = angular.module('metovular.services', ['metovular.services.cache', 'metovular.services.http', 'metovular.services.queryCache', 'metovular.services.gcm']);
 
 }).call(this);
